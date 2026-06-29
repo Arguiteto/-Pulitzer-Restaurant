@@ -134,6 +134,7 @@
   .prod-emoji{font-size:48px}
   .prod-q{position:absolute;top:8px;right:8px;background:var(--acc);color:#fff;min-width:24px;height:24px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;padding:0 6px}
   .esg-tag{position:absolute;bottom:8px;left:8px;background:rgba(239,83,80,.92);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px}
+  .prod-stock{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px}
   .prod-label{padding:10px 12px;display:flex;flex-direction:column;gap:2px}
   .prod-nm{font-weight:600;font-size:14px}
   .prod-pr{color:var(--acc);font-weight:700;font-size:14px}
@@ -243,7 +244,7 @@
     <div class="note">Só o <b>gerente</b> edita aqui. Clique em <b>nome</b>, <b>categoria</b> ou <b>preço</b> para alterar; use o botão para <b>esgotar/repor</b> ou <b>remover</b>; e o painel abaixo para <b>adicionar</b>. Tudo grava na tabela <b>itens_cardapio</b> do Supabase e reflete na hora nas telas da Mesa e do Garçom.</div>
     <div class="card-tab">
       <table class="mtable">
-        <thead><tr><th>Item</th><th>Categoria</th><th>Preço</th><th>Disponível</th><th></th></tr></thead>
+        <thead><tr><th>Item</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Disponível</th><th></th></tr></thead>
         <tbody id="mng"></tbody>
       </table>
     </div>
@@ -261,8 +262,8 @@
   <div class="login-card">
     <div class="login-icon">🍔</div>
     <h2>Pulitzer Restaurant</h2>
-    <p class="login-sub">Entre com seu e-mail e senha.</p>
-    <label>E-mail<input type="text" id="lg-email" autocomplete="username" onkeydown="if(event.key==='Enter')entrar()"></label>
+    <p class="login-sub">Entre com seu usuário e senha.</p>
+    <label>Usuário<input type="text" id="lg-email" placeholder="ex.: mesa01, cozinha, garcom" autocomplete="username" onkeydown="if(event.key==='Enter')entrar()"></label>
     <label>Senha<input type="password" id="lg-pass" autocomplete="current-password" onkeydown="if(event.key==='Enter')entrar()"></label>
     <button class="login-btn" onclick="entrar()">Entrar</button>
     <button class="link-btn" style="margin-top:14px" onclick="recuperarSenha()">Esqueci minha senha</button>
@@ -277,6 +278,10 @@
 <script>
 const $ = s => document.querySelector(s);
 const money = v => "R$ " + Number(v).toFixed(2).replace(".",",");
+// Domínio "fantasma": quem digita só "mesa01" vira "mesa01@pulitzer.local".
+// Quem digita um e-mail completo (com @) é usado como está (ex.: o gerente).
+const LOGIN_DOMAIN = "@pulitzer.local";
+const toEmail = u => u.includes('@') ? u : (u + LOGIN_DOMAIN);
 const esc = s => String(s).replace(/"/g,'&quot;');
 let toastT;
 function showToast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show');
@@ -301,10 +306,10 @@ function hideLogin(){ $('#login').classList.remove('show'); }
 
 window.entrar = async ()=>{
   if(!sb){ $('#login-err').textContent='Configuração ausente (js/config.js).'; return; }
-  const email=$('#lg-email').value.trim(), password=$('#lg-pass').value;
-  if(!email||!password){ $('#login-err').textContent='Preencha e-mail e senha.'; return; }
+  const user=$('#lg-email').value.trim(), password=$('#lg-pass').value;
+  if(!user||!password){ $('#login-err').textContent='Preencha usuário e senha.'; return; }
   $('#login-err').textContent='Entrando...';
-  const { error } = await sb.auth.signInWithPassword({ email, password });
+  const { error } = await sb.auth.signInWithPassword({ email: toEmail(user), password });
   if(error){ $('#login-err').textContent='E-mail ou senha inválidos.'; return; }
   const { data:{ session } } = await sb.auth.getSession();
   await afterLogin(session.user);
@@ -312,8 +317,10 @@ window.entrar = async ()=>{
 
 window.recuperarSenha = async ()=>{
   if(!sb) return;
-  const email=$('#lg-email').value.trim();
-  if(!email){ $('#login-err').textContent='Digite seu e-mail acima primeiro.'; return; }
+  const user=$('#lg-email').value.trim();
+  if(!user){ $('#login-err').textContent='Digite seu usuário/e-mail acima primeiro.'; return; }
+  const email=toEmail(user);
+  if(email.endsWith(LOGIN_DOMAIN)){ $('#login-err').textContent='Recuperação só para contas com e-mail real (peça ao gerente para redefinir).'; return; }
   const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
   $('#login-err').textContent = error ? ('Erro: '+error.message)
     : ('Enviamos um link de recuperação para '+email+'.');
@@ -350,7 +357,7 @@ function showView(papel){
 async function loadCardapio(){
   const { data, error } = await sb.from('itens_cardapio').select('*').order('id');
   if(error){ showToast('Erro ao carregar cardápio: '+error.message); return; }
-  cardapio = (data||[]).map(r=>({ id:r.id, nome:r.nome, cat:r.categoria, preco:Number(r.preco), disp:r.disponivel, emoji:r.emoji }));
+  cardapio = (data||[]).map(r=>({ id:r.id, nome:r.nome, cat:r.categoria, preco:Number(r.preco), disp:r.disponivel, emoji:r.emoji, estoque:r.estoque }));
   renderAll();
 }
 async function loadMesas(){
@@ -390,7 +397,9 @@ function setupRealtime(){
 }
 
 // ===== Carrinho (local, por papel ativo) =====
-window.addItem=(ctx,id)=>{ carrinho[ctx][id]=(carrinho[ctx][id]||0)+1; renderAll(); };
+window.addItem=(ctx,id)=>{ const it=cardapio.find(x=>x.id==id); const cur=carrinho[ctx][id]||0;
+  if(it && it.estoque!=null && cur>=it.estoque){ showToast(`Só há ${it.estoque} em estoque de ${it.nome}.`); return; }
+  carrinho[ctx][id]=cur+1; renderAll(); };
 window.delItem=(ctx,id)=>{ if(carrinho[ctx][id]>0){carrinho[ctx][id]--; if(!carrinho[ctx][id])delete carrinho[ctx][id];} renderAll(); };
 
 window.enviar = async (ctx)=>{
@@ -430,6 +439,16 @@ window.setNome = async (id,val)=>{ const v=val.trim();
   if(error) showToast('Erro: '+error.message); else loadCardapio(); };
 window.setCat = async (id,val)=>{ const { error } = await sb.from('itens_cardapio').update({categoria:val.trim()||'Outros'}).eq('id',id);
   if(error) showToast('Erro: '+error.message); else loadCardapio(); };
+window.setEstoque = async (id,val)=>{
+  val=String(val).trim();
+  const estoque = val==='' ? null : parseInt(val,10);
+  if(val!=='' && (isNaN(estoque)||estoque<0)){ showToast('Estoque inválido'); loadCardapio(); return; }
+  const patch = { estoque };
+  if(estoque!=null && estoque>0) patch.disponivel = true;   // repor reativa o item
+  if(estoque===0) patch.disponivel = false;                 // zerou = esgotado
+  const { error } = await sb.from('itens_cardapio').update(patch).eq('id',id);
+  if(error) showToast('Erro: '+error.message);
+  else { showToast(estoque==null?'Estoque: ilimitado':`Estoque: ${estoque}`); loadCardapio(); } };
 function parseBR(s){ s=String(s).replace(/[^\d.,]/g,'').trim();
   if(s.includes(',')) s=s.replace(/\./g,'').replace(',','.'); return parseFloat(s); }
 window.setPreco = async (id,val)=>{ const n=parseBR(val);
@@ -513,6 +532,8 @@ function renderMng(){
       <td><span class="preco-cell"><span class="pfx">R$</span>
         <input class="editbox preco-inp" value="${i.preco.toFixed(2).replace('.',',')}"
           inputmode="decimal" onchange="setPreco(${i.id}, this.value)" onfocus="this.select()"></span></td>
+      <td><input class="editbox" style="width:64px" value="${i.estoque==null?'':i.estoque}" placeholder="∞"
+          inputmode="numeric" title="vazio = ilimitado" onchange="setEstoque(${i.id}, this.value)" onfocus="this.select()"></td>
       <td><label class="switch"><input type="checkbox" ${i.disp?'checked':''} onchange="toggleDisp(${i.id})"><span class="slider"></span></label>
       <span style="margin-left:10px;font-size:13px;color:var(--mut)">${i.disp?'no cardápio':'esgotado'}</span></td>
       <td><button class="del-btn" onclick="removeMenuItem(${i.id})">Remover</button></td></tr>`).join('');
@@ -533,6 +554,7 @@ function renderClienteGrid(){
     return `<button class="prod-card ${i.disp?'':'esg'}" ${i.disp?`onclick="addItem('mesa',${i.id})"`:'disabled'}>
       <div class="prod-photo"><span class="prod-emoji">${i.emoji||'🍽️'}</span>
         ${i.disp?'':'<span class="esg-tag">esgotado</span>'}
+        ${i.disp && i.estoque!=null ? `<span class="prod-stock">resta ${i.estoque}</span>`:''}
         ${q?`<span class="prod-q">${q}</span>`:''}</div>
       <div class="prod-label"><span class="prod-nm">${i.nome}</span><span class="prod-pr">${money(i.preco)}</span></div>
     </button>`;
