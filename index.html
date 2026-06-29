@@ -241,7 +241,7 @@
   <section id="v-gerente" class="view">
     <div class="bar"><h2 class="title">Cardápio · Gestão</h2><span class="badge">Gerente: <b id="ger-nome">—</b></span>
       <button class="link-btn" onclick="sair()">Sair</button></div>
-    <div class="note">Só o <b>gerente</b> edita aqui. Clique em <b>nome</b>, <b>categoria</b> ou <b>preço</b> para alterar; use o botão para <b>esgotar/repor</b> ou <b>remover</b>; e o painel abaixo para <b>adicionar</b>. Tudo grava na tabela <b>itens_cardapio</b> do Supabase e reflete na hora nas telas da Mesa e do Garçom.</div>
+    <div class="note">Só o <b>gerente</b> edita aqui. Clique em <b>nome</b>, <b>categoria</b> ou <b>preço</b> para alterar; use o botão para <b>esgotar/repor</b> ou <b>remover (arquivar)</b>; e o painel abaixo para <b>adicionar</b>. Tudo grava na tabela <b>itens_cardapio</b> do Supabase e reflete na hora nas telas da Mesa e do Garçom.</div>
     <div class="card-tab">
       <table class="mtable">
         <thead><tr><th>Item</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Disponível</th><th></th></tr></thead>
@@ -355,9 +355,23 @@ function showView(papel){
 
 // ===== Carregar dados =====
 async function loadCardapio(){
-  const { data, error } = await sb.from('itens_cardapio').select('*').order('id');
+  // Itens arquivados ficam preservados no banco para manter o histórico,
+  // mas não aparecem em nenhuma tela do sistema.
+  const { data, error } = await sb.from('itens_cardapio')
+    .select('*')
+    .eq('arquivado', false)
+    .order('id');
   if(error){ showToast('Erro ao carregar cardápio: '+error.message); return; }
-  cardapio = (data||[]).map(r=>({ id:r.id, nome:r.nome, cat:r.categoria, preco:Number(r.preco), disp:r.disponivel, emoji:r.emoji, estoque:r.estoque }));
+  cardapio = (data||[]).map(r=>({
+    id:r.id,
+    nome:r.nome,
+    cat:r.categoria,
+    preco:Number(r.preco),
+    disp:r.disponivel,
+    emoji:r.emoji,
+    estoque:r.estoque,
+    arquivado:r.arquivado
+  }));
   renderAll();
 }
 async function loadMesas(){
@@ -455,15 +469,38 @@ window.setPreco = async (id,val)=>{ const n=parseBR(val);
   if(isNaN(n)||n<0){ showToast('Valor inválido — não alterado'); loadCardapio(); return; }
   const { error } = await sb.from('itens_cardapio').update({preco:n}).eq('id',id);
   if(error) showToast('Erro: '+error.message); else { showToast('Preço atualizado'); loadCardapio(); } };
-window.removeMenuItem = async (id)=>{ const it=cardapio.find(x=>x.id===id);
-  if(!confirm(`Remover "${it.nome}" do cardápio?`)) return;
-  const { error } = await sb.from('itens_cardapio').delete().eq('id',id);
-  if(error) showToast('Não foi possível remover (talvez haja pedidos com este item). Marque como esgotado.');
-  else { showToast(`${it.nome} removido`); loadCardapio(); } };
+window.removeMenuItem = async (id)=>{
+  const it=cardapio.find(x=>x.id===id);
+  if(!it) return;
+  if(!confirm(`Remover "${it.nome}" do cardápio? O histórico dos pedidos será preservado.`)) return;
+
+  const { error } = await sb.from('itens_cardapio')
+    .update({ arquivado:true, disponivel:false })
+    .eq('id',id);
+
+  if(error){
+    showToast('Não foi possível remover: '+error.message);
+    return;
+  }
+
+  // Remove imediatamente da interface; o registro continua no banco, arquivado.
+  delete carrinho.mesa[id];
+  delete carrinho.garcom[id];
+  cardapio = cardapio.filter(x=>x.id!==id);
+  renderAll();
+  showToast(`${it.nome} removido`);
+};
 window.addMenuItem = async ()=>{ const nm=$('#new-nome').value.trim(), cat=$('#new-cat').value.trim()||'Outros', pr=parseBR($('#new-preco').value);
   if(!nm){ showToast('Informe o nome do item'); return; }
   if(isNaN(pr)||pr<0){ showToast('Informe um preço válido'); return; }
-  const { error } = await sb.from('itens_cardapio').insert({nome:nm,categoria:cat,preco:pr,emoji:'🍽️',disponivel:true});
+  const { error } = await sb.from('itens_cardapio').insert({
+    nome:nm,
+    categoria:cat,
+    preco:pr,
+    emoji:'🍽️',
+    disponivel:true,
+    arquivado:false
+  });
   if(error){ showToast('Erro: '+error.message); return; }
   $('#new-nome').value=''; $('#new-cat').value=''; $('#new-preco').value='';
   showToast(`${nm} adicionado`); loadCardapio(); };
@@ -471,15 +508,22 @@ window.addMenuItem = async ()=>{ const nm=$('#new-nome').value.trim(), cat=$('#n
 // ===== Render: Garçom (lista) =====
 function renderMenu(target, ctx){
   if(!target) return;
-  const cats=[...new Set(cardapio.map(i=>i.cat))];
+  // Garçom visualiza apenas itens disponíveis e não arquivados.
+  const visiveis=cardapio.filter(i=>i.disp);
+  const cats=[...new Set(visiveis.map(i=>i.cat))];
+
+  if(!visiveis.length){
+    target.innerHTML='<div class="empty">Nenhum item disponível no momento.</div>';
+    return;
+  }
+
   target.innerHTML = cats.map(c=>`
     <div class="cat"><h3>${c}</h3>
-      ${cardapio.filter(i=>i.cat===c).map(i=>`
-        <div class="item ${i.disp?'':'esgotado'}">
+      ${visiveis.filter(i=>i.cat===c).map(i=>`
+        <div class="item">
           <div><div class="nm">${i.nome}</div><div class="pr">${money(i.preco)}</div></div>
           <div class="right">
-            ${i.disp ? `<button class="add" onclick="addItem('${ctx}',${i.id})">+</button>`
-                     : `<span class="tag-esg">esgotado</span>`}
+            <button class="add" onclick="addItem('${ctx}',${i.id})">+</button>
           </div>
         </div>`).join('')}
     </div>`).join('');
@@ -548,13 +592,22 @@ function renderClienteGrid(){
   if(!grid) return;
   if(activeTab==='promocoes'){ carousel.style.display=''; grid.style.display='none'; if(aside) aside.style.display='none'; return; }
   carousel.style.display='none'; grid.style.display=''; if(aside) aside.style.display='';
-  const items = activeTab==='bebidas' ? cardapio.filter(i=>i.cat==='Bebidas') : cardapio.filter(i=>i.cat!=='Bebidas');
+  // A mesa visualiza somente itens disponíveis e não arquivados.
+  const disponiveis = cardapio.filter(i=>i.disp);
+  const items = activeTab==='bebidas'
+    ? disponiveis.filter(i=>i.cat==='Bebidas')
+    : disponiveis.filter(i=>i.cat!=='Bebidas');
+
+  if(!items.length){
+    grid.innerHTML='<div class="empty">Nenhum item disponível nesta categoria.</div>';
+    return;
+  }
+
   grid.innerHTML = items.map(i=>{
     const q=carrinho.mesa[i.id]||0;
-    return `<button class="prod-card ${i.disp?'':'esg'}" ${i.disp?`onclick="addItem('mesa',${i.id})"`:'disabled'}>
+    return `<button class="prod-card" onclick="addItem('mesa',${i.id})">
       <div class="prod-photo"><span class="prod-emoji">${i.emoji||'🍽️'}</span>
-        ${i.disp?'':'<span class="esg-tag">esgotado</span>'}
-        ${i.disp && i.estoque!=null ? `<span class="prod-stock">resta ${i.estoque}</span>`:''}
+        ${i.estoque!=null ? `<span class="prod-stock">resta ${i.estoque}</span>`:''}
         ${q?`<span class="prod-q">${q}</span>`:''}</div>
       <div class="prod-label"><span class="prod-nm">${i.nome}</span><span class="prod-pr">${money(i.preco)}</span></div>
     </button>`;
