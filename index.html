@@ -73,6 +73,10 @@
   .stat{font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:20px;font-weight:700}
   .s-novo{color:var(--blue);background:#eaf1fe}.s-preparo{color:#9a6b04;background:var(--warn-soft)}.s-pronto{color:#0c7a4e;background:var(--ok-soft)}
   /* Gerente */
+  .gtabs{display:flex;gap:6px;margin-bottom:18px}
+  .gtabs button{background:var(--panel);border:1px solid var(--line);color:var(--mut);padding:9px 18px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;transition:.15s}
+  .gtabs button:hover{color:var(--txt)}
+  .gtabs button.active{background:var(--acc);color:#fff;border-color:var(--acc)}
   .card-tab{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
   .mtable{width:100%;border-collapse:collapse}
   .mtable th,.mtable td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px}
@@ -165,63 +169,6 @@
   .login-btn{width:100%;background:var(--acc);color:#fff;border:none;border-radius:13px;padding:14px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 2px 12px rgba(255,106,61,.32)}
   .login-btn:hover{filter:brightness(1.05)}
   .login-err{color:var(--hot);font-size:13px;margin-top:12px;min-height:16px;font-weight:600}
-  /* ===== Observação no item (sem cebola etc.) ===== */
-  .obs-link{background:none;border:none;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
-  .obs-text{display:block;font-size:12px;color:var(--acc);font-weight:600;margin-top:2px}
-  .num-list .obs-text{margin-left:26px}
-  /* ===== KDS: relógio e atraso ===== */
-  .ticket .th .clock{font-size:12px;color:var(--mut);font-weight:700;font-variant-numeric:tabular-nums}
-  .ticket .th .when{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-  .ticket .th .atraso{font-size:11px;color:var(--hot);font-weight:800;letter-spacing:.3px}
-  .ticket li .obs{padding:0;font-style:normal;color:var(--acc);font-weight:600;font-size:12px;margin-left:26px}
-  .ticket .b-relatorio{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 2px 8px rgba(63,125,246,.28)}
-  .ticket .b-relatorio:hover{filter:brightness(1.05)}
-  /* ===== Cliente: mesa bloqueada ===== */
-  .cli-lock{position:absolute;inset:0;background:rgba(245,246,248,.92);backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:30px;z-index:8;border-radius:20px}
-  .cli-lock .lk-ic{font-size:46px}
-  .cli-lock h3{margin:0;font-size:19px}
-  .cli-lock p{margin:0;color:var(--mut);font-size:14px;max-width:280px;line-height:1.5}
-  .cliente-app{position:relative}
-  /* ===== Cliente: histórico de pedidos ===== */
-  .hist-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
-  .hist-card .hh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .hist-card .hh .ht{font-weight:700;font-size:13px;color:var(--mut)}
-  .hist-card ul{list-style:none;margin:8px 0 0;padding:0}
-  .hist-card li{font-size:14px;padding:3px 0;display:flex;gap:8px}
-  .hist-card li .q{color:var(--acc);font-weight:700}
-  .hist-card .hobs{font-size:12px;color:var(--acc);font-weight:600;margin-left:26px}
-  .pill{font-size:11px;text-transform:uppercase;letter-spacing:.6px;padding:4px 10px;border-radius:20px;font-weight:800}
-  .p-novo{color:var(--blue);background:#eaf1fe}.p-preparo{color:#9a6b04;background:var(--warn-soft)}
-  .p-pronto{color:#0c7a4e;background:var(--ok-soft)}.p-entregue{color:var(--mut);background:var(--panel2)}
-  /* ===== Cliente: ingredientes ===== */
-  .ingr-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
-  .ingr-card .in{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
-  .ingr-card .il{color:var(--mut);font-size:13px;margin-top:5px;line-height:1.5}
-  /* ===== Controle de mesas (garçom/gerente) ===== */
-  .mesas-control{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
-  .mesa-chip{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px 14px;box-shadow:var(--shadow)}
-  .mesa-chip .mn{font-weight:700;font-size:14px}
-  .mesa-chip .ms{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:18px}
-  .mesa-chip.aberta .ms{color:#0c7a4e;background:var(--ok-soft)}
-  .mesa-chip.fechada .ms{color:var(--mut);background:var(--panel2)}
-  .mesa-chip button{border:none;border-radius:9px;padding:7px 12px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s}
-  .mesa-chip .b-abrir{background:var(--ok-soft);color:#0c7a4e}
-  .mesa-chip .b-fechar{background:#fdeced;color:var(--hot)}
-  .mesa-chip button:hover{filter:brightness(.96)}
-  /* ===== Relatório do dia (modal) ===== */
-  .report-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-  .report-head h2{margin:0;font-size:21px}
-  .report-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.28);padding:28px;width:640px;max-width:100%;max-height:88vh;overflow:auto}
-  .rep-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:22px}
-  .rep-stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}
-  .rep-stat .v{font-size:26px;font-weight:800;letter-spacing:-.5px}
-  .rep-stat .l{font-size:12px;color:var(--mut);font-weight:600;margin-top:2px}
-  .rep-flex{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-  .rep-legend{flex:1;min-width:180px;list-style:none;margin:0;padding:0}
-  .rep-legend li{display:flex;align-items:center;gap:9px;font-size:14px;padding:5px 0}
-  .rep-legend .sw{width:13px;height:13px;border-radius:4px;flex-shrink:0}
-  .rep-legend .lq{margin-left:auto;color:var(--mut);font-weight:700;font-variant-numeric:tabular-nums}
-  .rep-empty{color:var(--mut);text-align:center;padding:30px;font-size:14px}
 </style>
 </head>
 <body>
@@ -232,11 +179,6 @@
 
   <section id="v-mesa" class="view">
     <div class="cliente-app">
-      <div id="cli-lock" class="cli-lock" style="display:none">
-        <div class="lk-ic">🔒</div>
-        <h3>Mesa fechada</h3>
-        <p>Peça ao garçom para abrir a mesa. Assim que liberada, o cardápio aparece aqui.</p>
-      </div>
       <header class="cli-top">
         <span class="cli-logo">🍔 Pulitzer Restaurant</span>
         <span class="cli-mesa">MESA <b id="cli-mesa-num">--</b></span>
@@ -261,16 +203,12 @@
             </div>
           </div>
           <div id="cli-grid" class="prod-grid"></div>
-          <div id="cli-ingredientes" style="display:none"></div>
-          <div id="cli-historico" style="display:none"></div>
         </main>
       </div>
       <nav class="cli-nav">
         <button data-tab="promocoes" class="active">Promoções</button>
         <button data-tab="cardapio">Cardápio</button>
         <button data-tab="bebidas">Bebidas</button>
-        <button data-tab="ingredientes">Ingredientes</button>
-        <button data-tab="historico">Meus pedidos</button>
       </nav>
     </div>
   </section>
@@ -284,7 +222,6 @@
       </label>
       <button class="link-btn" onclick="sair()">Sair</button>
     </div>
-    <div id="gar-mesas" class="mesas-control"></div>
     <div class="grid">
       <div id="menu-garcom"></div>
       <div class="panel">
@@ -299,7 +236,6 @@
       <h2 class="title">Cozinha</h2>
       <span class="badge">Novos: <b id="kpi-novo">0</b></span>
       <span class="badge">Em preparo: <b id="kpi-prep">0</b></span>
-      <button class="b-relatorio" style="margin-left:auto" onclick="abrirRelatorio()">📊 Relatório do dia</button>
       <button class="link-btn" onclick="sair()">Sair</button>
     </div>
     <div id="kds" class="kds"></div>
@@ -307,22 +243,46 @@
   </section>
 
   <section id="v-gerente" class="view">
-    <div class="bar"><h2 class="title">Cardápio · Gestão</h2><span class="badge">Gerente: <b id="ger-nome">—</b></span>
+    <div class="bar"><h2 class="title">Gestão</h2><span class="badge">Gerente: <b id="ger-nome">—</b></span>
       <button class="link-btn" onclick="sair()">Sair</button></div>
-    <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin:4px 0 12px;font-weight:700">Mesas</h3>
-    <div id="ger-mesas" class="mesas-control"></div>
-    <div class="note">Só o <b>gerente</b> edita aqui. Clique em <b>nome</b>, <b>categoria</b> ou <b>preço</b> para alterar; use o botão para <b>esgotar/repor</b> ou <b>remover (arquivar)</b>; e o painel abaixo para <b>adicionar</b>. Tudo grava na tabela <b>itens_cardapio</b> do Supabase e reflete na hora nas telas da Mesa e do Garçom.</div>
-    <div class="card-tab">
-      <table class="mtable">
-        <thead><tr><th>Item</th><th>Categoria</th><th>Preço</th><th>Ingredientes</th><th>Estoque</th><th>Disponível</th><th></th></tr></thead>
-        <tbody id="mng"></tbody>
-      </table>
+    <div class="gtabs">
+      <button data-gtab="cardapio" class="active" onclick="gtab('cardapio')">Cardápio</button>
+      <button data-gtab="logins" onclick="gtab('logins')">Logins</button>
     </div>
-    <div class="add-panel">
-      <label>Item<input id="new-nome" placeholder="Ex.: X-Frango"></label>
-      <label>Categoria<input id="new-cat" placeholder="Ex.: Hambúrgueres"></label>
-      <label>Preço (R$)<input id="new-preco" inputmode="decimal" placeholder="0,00" style="width:100px"></label>
-      <button class="add-btn" onclick="addMenuItem()">+ Adicionar item</button>
+
+    <div id="gtab-cardapio">
+      <div class="note">Clique em <b>nome</b>, <b>categoria</b>, <b>preço</b> ou <b>estoque</b> para alterar; use o botão para <b>esgotar/repor</b> ou <b>remover</b>; e o painel abaixo para <b>adicionar</b>. Estoque vazio = ilimitado. Tudo grava no Supabase e reflete na hora nas outras telas.</div>
+      <div class="card-tab">
+        <table class="mtable">
+          <thead><tr><th>Item</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Disponível</th><th></th></tr></thead>
+          <tbody id="mng"></tbody>
+        </table>
+      </div>
+      <div class="add-panel">
+        <label>Item<input id="new-nome" placeholder="Ex.: X-Frango"></label>
+        <label>Categoria<input id="new-cat" placeholder="Ex.: Hambúrgueres"></label>
+        <label>Preço (R$)<input id="new-preco" inputmode="decimal" placeholder="0,00" style="width:100px"></label>
+        <button class="add-btn" onclick="addMenuItem()">+ Adicionar item</button>
+      </div>
+    </div>
+
+    <div id="gtab-logins" style="display:none">
+      <div class="note">Crie e gerencie os logins do salão. Mesa, garçom e cozinha não precisam de e-mail (basta um usuário curto). Só o gerente vê esta aba. Requer a Edge Function publicada (ver DEPLOY-EDGE-FUNCTION.md).</div>
+      <div class="card-tab">
+        <table class="mtable">
+          <thead><tr><th>Usuário</th><th>Papel</th><th>Mesa</th><th></th></tr></thead>
+          <tbody id="logins-tb"></tbody>
+        </table>
+      </div>
+      <div class="add-panel">
+        <label>Usuário<input id="nl-user" placeholder="ex.: mesa02"></label>
+        <label>Senha<input id="nl-pass" placeholder="senha"></label>
+        <label>Papel<select id="nl-papel" onchange="nlPapelChange()" style="border:1px solid var(--line)">
+          <option value="mesa">mesa</option><option value="garcom">garçom</option>
+          <option value="cozinha">cozinha</option><option value="gerente">gerente</option></select></label>
+        <label id="nl-mesa-wrap">Mesa<select id="nl-mesa" style="border:1px solid var(--line)"></select></label>
+        <button class="add-btn" onclick="criarLogin()">+ Criar login</button>
+      </div>
     </div>
   </section>
 
@@ -342,16 +302,6 @@
 </div>
 
 <div id="toast" class="toast"></div>
-
-<div id="relatorio" class="modal" onclick="if(event.target===this)fecharRelatorio()">
-  <div class="report-card">
-    <div class="report-head">
-      <h2>📊 Relatório do dia</h2>
-      <button class="link-btn" onclick="fecharRelatorio()">Fechar</button>
-    </div>
-    <div id="rep-body"></div>
-  </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js"></script>
@@ -377,9 +327,7 @@ let me = { user:null, papel:null, nome:'', mesa_id:null, mesa_numero:'' };
 let cardapio = [];          // [{id,nome,cat,preco,disp,emoji}]
 let mesas = [];             // [{id,numero}]
 const carrinho = { mesa:{}, garcom:{} };
-const obsCarrinho = { mesa:{}, garcom:{} };   // observação por item (ex.: "sem cebola")
-const state = { pedidos:[], pedidosMesa:[] };
-let mesaAberta = false;        // estado da mesa do cliente logado
+const state = { pedidos:[] };
 let activeTab='promocoes', slide=0;
 
 // ===== Login / sessão =====
@@ -420,7 +368,6 @@ async function afterLogin(user){
   await loadCardapio();
   await loadMesas();
   if(['garcom','cozinha','gerente'].includes(me.papel)) await loadPedidos();
-  if(me.papel==='mesa') await loadPedidosMesa();
   setupRealtime();
   showView(me.papel);
 }
@@ -438,102 +385,83 @@ function showView(papel){
 
 // ===== Carregar dados =====
 async function loadCardapio(){
-  // Itens arquivados ficam preservados no banco para manter o histórico,
-  // mas não aparecem em nenhuma tela do sistema.
-  const { data, error } = await sb.from('itens_cardapio')
-    .select('*')
-    .eq('arquivado', false)
-    .order('id');
+  const { data, error } = await sb.from('itens_cardapio').select('*').order('id');
   if(error){ showToast('Erro ao carregar cardápio: '+error.message); return; }
-  cardapio = (data||[]).map(r=>({
-    id:r.id,
-    nome:r.nome,
-    cat:r.categoria,
-    preco:Number(r.preco),
-    disp:r.disponivel,
-    emoji:r.emoji,
-    estoque:r.estoque,
-    ingredientes:r.ingredientes||'',
-    arquivado:r.arquivado
-  }));
+  cardapio = (data||[]).map(r=>({ id:r.id, nome:r.nome, cat:r.categoria, preco:Number(r.preco), disp:r.disponivel, emoji:r.emoji, estoque:r.estoque }));
   renderAll();
 }
 async function loadMesas(){
-  const { data, error } = await sb.from('mesas').select('id,numero,aberta').eq('ativo',true).order('numero');
+  const { data, error } = await sb.from('mesas').select('id,numero').eq('ativo',true).order('numero');
   if(error){ return; }
   mesas = data||[];
+  const opts = mesas.map(m=>`<option value="${m.id}">${m.numero}</option>`).join('');
   const sel=$('#sel-mesa');
-  if(sel){ sel.innerHTML = mesas.map(m=>`<option value="${m.id}">${m.numero}</option>`).join('');
-    if(mesas[0]) $('#g-mesa').textContent = mesas[0].numero; }
-  // estado da mesa do cliente logado
-  if(me.papel==='mesa' && me.mesa_id){
-    const minha = mesas.find(m=>m.id===me.mesa_id);
-    mesaAberta = minha ? !!minha.aberta : false;
-    aplicarBloqueioMesa();
-  }
-  renderMesasControl();
+  if(sel){ sel.innerHTML = opts; if(mesas[0]) $('#g-mesa').textContent = mesas[0].numero; }
+  const nl=$('#nl-mesa'); if(nl) nl.innerHTML = opts;
 }
-function aplicarBloqueioMesa(){
-  const lock=$('#cli-lock'); if(!lock) return;
-  lock.style.display = mesaAberta ? 'none' : 'flex';
-  const send=$('#cli-send'); if(send) send.disabled = !mesaAberta || $('#cli-qtd').textContent==='0';
-}
-window.toggleMesa = async (id, abrir)=>{
-  const patch = abrir ? { aberta:true, aberta_em:new Date().toISOString() } : { aberta:false };
-  const { error } = await sb.from('mesas').update(patch).eq('id',id);
-  if(error){ showToast('Erro: '+error.message); return; }
-  const m=mesas.find(x=>x.id===id); const num=m?m.numero:id;
-  showToast(abrir ? `Mesa ${num} aberta` : `Mesa ${num} fechada`);
-  loadMesas();
+
+// ===== Aba Logins (gerente) — usa a Edge Function 'gerente-usuarios' =====
+window.gtab=(name)=>{
+  document.querySelectorAll('.gtabs button').forEach(b=>b.classList.toggle('active',b.dataset.gtab===name));
+  $('#gtab-cardapio').style.display = name==='cardapio'?'':'none';
+  $('#gtab-logins').style.display = name==='logins'?'':'none';
+  if(name==='logins') loadLogins();
 };
-function renderMesasControl(){
-  const html = mesas.map(m=>`
-    <div class="mesa-chip ${m.aberta?'aberta':'fechada'}">
-      <span class="mn">Mesa ${m.numero}</span>
-      <span class="ms">${m.aberta?'aberta':'fechada'}</span>
-      ${m.aberta
-        ? `<button class="b-fechar" onclick="toggleMesa(${m.id},false)">Fechar</button>`
-        : `<button class="b-abrir" onclick="toggleMesa(${m.id},true)">Abrir</button>`}
-    </div>`).join('') || '<div class="empty">Nenhuma mesa cadastrada.</div>';
-  ['#gar-mesas','#ger-mesas'].forEach(sel=>{ const el=$(sel); if(el) el.innerHTML=html; });
+window.nlPapelChange=()=>{ $('#nl-mesa-wrap').style.display = $('#nl-papel').value==='mesa'?'':'none'; };
+async function fn(acao, extra){ return await sb.functions.invoke('gerente-usuarios',{ body:{ acao, ...extra } }); }
+async function loadLogins(){
+  const tb=$('#logins-tb'); if(!tb) return;
+  tb.innerHTML=`<tr><td colspan="4" style="color:var(--mut)">Carregando...</td></tr>`;
+  const { data, error } = await fn('listar',{});
+  if(error || (data&&data.error)){ tb.innerHTML=`<tr><td colspan="4" style="color:var(--hot)">${(data&&data.error)||error.message}</td></tr>`; return; }
+  const us=(data&&data.usuarios)||[];
+  tb.innerHTML = us.length ? us.map(u=>`<tr>
+    <td class="nm">${u.usuario||'—'}</td><td>${u.papel}</td><td>${u.mesa||'—'}</td>
+    <td style="display:flex;gap:8px;border-bottom:none">
+      <button class="del-btn" style="background:var(--panel2);color:var(--txt)" onclick="resetarSenhaLogin('${u.id}','${u.usuario||''}')">Trocar senha</button>
+      <button class="del-btn" onclick="removerLogin('${u.id}','${u.usuario||''}')">Remover</button>
+    </td></tr>`).join('') : `<tr><td colspan="4" style="color:var(--mut)">Nenhum login ainda.</td></tr>`;
 }
+window.criarLogin=async ()=>{
+  const usuario=$('#nl-user').value.trim(), senha=$('#nl-pass').value, papel=$('#nl-papel').value;
+  let mesa_id=null;
+  if(papel==='mesa'){ mesa_id=Number($('#nl-mesa').value)||null; if(!mesa_id){ showToast('Escolha a mesa'); return; } }
+  if(!usuario||!senha){ showToast('Preencha usuário e senha'); return; }
+  const { data, error } = await fn('criar',{ usuario, senha, papel, nome:usuario, mesa_id });
+  if(error || (data&&data.error)){ showToast('Erro: '+((data&&data.error)||error.message)); return; }
+  $('#nl-user').value=''; $('#nl-pass').value=''; showToast(`Login "${usuario}" criado`); loadLogins();
+};
+window.resetarSenhaLogin=async (id,usuario)=>{
+  const senha=prompt(`Nova senha para "${usuario}":`); if(!senha) return;
+  const { data, error } = await fn('senha',{ id, senha });
+  if(error || (data&&data.error)){ showToast('Erro: '+((data&&data.error)||error.message)); return; }
+  showToast('Senha alterada');
+};
+window.removerLogin=async (id,usuario)=>{
+  if(!confirm(`Remover o login "${usuario}"?`)) return;
+  const { data, error } = await fn('remover',{ id });
+  if(error || (data&&data.error)){ showToast('Erro: '+((data&&data.error)||error.message)); return; }
+  showToast('Login removido'); loadLogins();
+};
 async function loadPedidos(){
   const { data, error } = await sb.from('pedidos')
-    .select('id,status,origem,criado_em,mesas(numero),pedido_itens(qtd,observacao,itens_cardapio(nome))')
+    .select('id,status,origem,criado_em,mesas(numero),pedido_itens(qtd,itens_cardapio(nome))')
     .neq('status','entregue').order('criado_em');
   if(error){ showToast('Erro ao carregar pedidos: '+error.message); return; }
   state.pedidos = (data||[]).map(p=>({
     id:p.id,
     mesa: p.mesas ? p.mesas.numero : '?',
     origem: p.origem==='garcom' ? 'Garçom' : 'Cliente',
-    itens: (p.pedido_itens||[]).map(pi=>({ nome: pi.itens_cardapio ? pi.itens_cardapio.nome : '?', q: pi.qtd, obs: pi.observacao||'' })),
+    itens: (p.pedido_itens||[]).map(pi=>({ nome: pi.itens_cardapio ? pi.itens_cardapio.nome : '?', q: pi.qtd })),
     status: p.status,
     t: new Date(p.criado_em).getTime()
   }));
   renderKDS();
 }
-// Histórico da própria mesa (cliente) — pedidos de hoje, inclusive entregues.
-async function loadPedidosMesa(){
-  if(!me.mesa_id) return;
-  const inicioDia = new Date(); inicioDia.setHours(0,0,0,0);
-  const { data, error } = await sb.from('pedidos')
-    .select('id,status,criado_em,pedido_itens(qtd,observacao,itens_cardapio(nome))')
-    .eq('mesa_id', me.mesa_id).gte('criado_em', inicioDia.toISOString())
-    .order('criado_em',{ascending:false});
-  if(error){ return; }
-  state.pedidosMesa = (data||[]).map(p=>({
-    id:p.id, status:p.status, t:new Date(p.criado_em).getTime(),
-    itens:(p.pedido_itens||[]).map(pi=>({ nome: pi.itens_cardapio ? pi.itens_cardapio.nome : '?', q:pi.qtd, obs:pi.observacao||'' }))
-  }));
-  if(activeTab==='historico') renderHistorico();
-}
 
 function setupRealtime(){
   sb.channel('rt-cardapio')
     .on('postgres_changes',{event:'*',schema:'public',table:'itens_cardapio'}, loadCardapio)
-    .subscribe();
-  sb.channel('rt-mesas')
-    .on('postgres_changes',{event:'*',schema:'public',table:'mesas'}, loadMesas)
     .subscribe();
   if(['garcom','cozinha','gerente'].includes(me.papel)){
     sb.channel('rt-pedidos')
@@ -541,33 +469,18 @@ function setupRealtime(){
       .on('postgres_changes',{event:'*',schema:'public',table:'pedido_itens'}, loadPedidos)
       .subscribe();
   }
-  if(me.papel==='mesa'){
-    sb.channel('rt-pedidos-mesa')
-      .on('postgres_changes',{event:'*',schema:'public',table:'pedidos'}, loadPedidosMesa)
-      .on('postgres_changes',{event:'*',schema:'public',table:'pedido_itens'}, loadPedidosMesa)
-      .subscribe();
-  }
 }
 
 // ===== Carrinho (local, por papel ativo) =====
-window.addItem=(ctx,id)=>{ 
-  if(ctx==='mesa' && !mesaAberta){ showToast('Mesa fechada — chame o garçom.'); return; }
-  const it=cardapio.find(x=>x.id==id); const cur=carrinho[ctx][id]||0;
+window.addItem=(ctx,id)=>{ const it=cardapio.find(x=>x.id==id); const cur=carrinho[ctx][id]||0;
   if(it && it.estoque!=null && cur>=it.estoque){ showToast(`Só há ${it.estoque} em estoque de ${it.nome}.`); return; }
   carrinho[ctx][id]=cur+1; renderAll(); };
-window.delItem=(ctx,id)=>{ if(carrinho[ctx][id]>0){carrinho[ctx][id]--; if(!carrinho[ctx][id]){delete carrinho[ctx][id]; delete obsCarrinho[ctx][id];}} renderAll(); };
-window.setObs=(ctx,id,val)=>{ const v=val.trim(); if(v) obsCarrinho[ctx][id]=v; else delete obsCarrinho[ctx][id]; };
-window.pedirObs=(ctx,id)=>{ const it=cardapio.find(x=>x.id==id);
-  const v=prompt(`Observação para ${it?it.nome:'o item'} (ex.: sem cebola):`, obsCarrinho[ctx][id]||'');
-  if(v===null) return; setObs(ctx,id,v); renderAll(); };
+window.delItem=(ctx,id)=>{ if(carrinho[ctx][id]>0){carrinho[ctx][id]--; if(!carrinho[ctx][id])delete carrinho[ctx][id];} renderAll(); };
 
 window.enviar = async (ctx)=>{
   const car=carrinho[ctx]; const ids=Object.keys(car); if(!ids.length) return;
   let mesaId, origem;
-  if(ctx==='mesa'){
-    if(!mesaAberta){ showToast('Mesa fechada — chame o garçom.'); return; }
-    mesaId=me.mesa_id; origem='cliente';
-  }
+  if(ctx==='mesa'){ mesaId=me.mesa_id; origem='cliente'; }
   else { mesaId=Number($('#sel-mesa').value); origem='garcom'; }
   if(!mesaId){ showToast('Mesa não definida.'); return; }
   const { data:pedido, error } = await sb.from('pedidos')
@@ -575,10 +488,10 @@ window.enviar = async (ctx)=>{
     .select().single();
   if(error){ showToast('Erro ao enviar: '+error.message); return; }
   const linhas = ids.map(id=>{ const it=cardapio.find(x=>x.id==id);
-    return { pedido_id:pedido.id, item_id:Number(id), qtd:car[id], preco_unit: it ? it.preco : 0, observacao: obsCarrinho[ctx][id]||null }; });
+    return { pedido_id:pedido.id, item_id:Number(id), qtd:car[id], preco_unit: it ? it.preco : 0 }; });
   const { error:e2 } = await sb.from('pedido_itens').insert(linhas);
   if(e2){ showToast('Erro nos itens: '+e2.message); return; }
-  carrinho[ctx]={}; obsCarrinho[ctx]={}; showToast('Pedido enviado para a cozinha ✓'); renderAll();
+  carrinho[ctx]={}; showToast('Pedido enviado para a cozinha ✓'); renderAll();
 };
 window.enviarMesa=()=>enviar('mesa');
 
@@ -591,71 +504,6 @@ window.avanca = async (id)=>{
   loadPedidos();
 };
 
-// ===== Relatório do dia (cozinha) =====
-const REP_CORES=['#ff6a3d','#3f7df6','#17b877','#f0a516','#6a5cff','#ef5350','#0ea5a5','#9333ea'];
-function donutSVG(fatias){
-  const total=fatias.reduce((s,f)=>s+f.value,0); if(!total) return '';
-  const R=70, r=42, cx=80, cy=80; let ang=-Math.PI/2; const paths=[];
-  fatias.forEach((f,idx)=>{
-    const frac=f.value/total, a2=ang+frac*2*Math.PI;
-    if(frac>=0.9999){ // fatia única = anel completo
-      paths.push(`<circle cx="${cx}" cy="${cy}" r="${(R+r)/2}" fill="none" stroke="${f.color}" stroke-width="${R-r}"/>`);
-    } else {
-      const x1=cx+R*Math.cos(ang), y1=cy+R*Math.sin(ang), x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2);
-      const xi2=cx+r*Math.cos(a2), yi2=cy+r*Math.sin(a2), xi1=cx+r*Math.cos(ang), yi1=cy+r*Math.sin(ang);
-      const big=frac>0.5?1:0;
-      paths.push(`<path d="M${x1} ${y1} A${R} ${R} 0 ${big} 1 ${x2} ${y2} L${xi2} ${yi2} A${r} ${r} 0 ${big} 0 ${xi1} ${yi1} Z" fill="${f.color}"/>`);
-    }
-    ang=a2;
-  });
-  return `<svg width="160" height="160" viewBox="0 0 160 160" style="flex-shrink:0">${paths.join('')}
-    <text x="80" y="76" text-anchor="middle" font-size="22" font-weight="800" fill="#1e242e">${total}</text>
-    <text x="80" y="94" text-anchor="middle" font-size="11" fill="#8a93a0">itens</text></svg>`;
-}
-window.abrirRelatorio = async ()=>{
-  const body=$('#rep-body'); $('#relatorio').classList.add('show');
-  body.innerHTML='<div class="rep-empty">Carregando…</div>';
-  const inicio=new Date(); inicio.setHours(0,0,0,0);
-  const { data, error } = await sb.from('pedidos')
-    .select('id,status,origem,criado_em,pedido_itens(qtd,preco_unit,itens_cardapio(nome))')
-    .gte('criado_em', inicio.toISOString());
-  if(error){ body.innerHTML=`<div class="rep-empty">Erro ao carregar: ${error.message}</div>`; return; }
-  const peds=data||[];
-  if(!peds.length){ body.innerHTML='<div class="rep-empty">Nenhum pedido registrado hoje ainda.</div>'; return; }
-  let totalItens=0, fat=0; const porStatus={}; const porItem={};
-  peds.forEach(p=>{
-    porStatus[p.status]=(porStatus[p.status]||0)+1;
-    (p.pedido_itens||[]).forEach(pi=>{
-      totalItens+=pi.qtd; fat+=pi.qtd*Number(pi.preco_unit||0);
-      const nm=pi.itens_cardapio?pi.itens_cardapio.nome:'?';
-      porItem[nm]=(porItem[nm]||0)+pi.qtd;
-    });
-  });
-  const ranked=Object.entries(porItem).sort((a,b)=>b[1]-a[1]);
-  const top=ranked.slice(0,7);
-  const restoQtd=ranked.slice(7).reduce((s,e)=>s+e[1],0);
-  const fatias=top.map((e,i)=>({label:e[0],value:e[1],color:REP_CORES[i%REP_CORES.length]}));
-  if(restoQtd) fatias.push({label:'Outros',value:restoQtd,color:'#c7ccd4'});
-  const entregues=porStatus['entregue']||0;
-  const ativos=peds.length-entregues;
-  body.innerHTML=`
-    <div class="rep-stats">
-      <div class="rep-stat"><div class="v">${peds.length}</div><div class="l">Pedidos hoje</div></div>
-      <div class="rep-stat"><div class="v">${totalItens}</div><div class="l">Itens vendidos</div></div>
-      <div class="rep-stat"><div class="v">${money(fat)}</div><div class="l">Faturamento</div></div>
-      <div class="rep-stat"><div class="v">${entregues}</div><div class="l">Entregues</div></div>
-      <div class="rep-stat"><div class="v">${ativos}</div><div class="l">Em aberto</div></div>
-    </div>
-    <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin:0 0 12px">Itens mais pedidos</h3>
-    <div class="rep-flex">
-      ${donutSVG(fatias)}
-      <ul class="rep-legend">
-        ${fatias.map(f=>`<li><span class="sw" style="background:${f.color}"></span>${esc(f.label)}<span class="lq">${f.value}</span></li>`).join('')}
-      </ul>
-    </div>`;
-};
-window.fecharRelatorio = ()=> $('#relatorio').classList.remove('show');
-
 // ===== Gerente: gravam no banco =====
 window.toggleDisp = async (id)=>{ const it=cardapio.find(x=>x.id===id);
   const { error } = await sb.from('itens_cardapio').update({disponivel:!it.disp}).eq('id',id);
@@ -666,8 +514,6 @@ window.setNome = async (id,val)=>{ const v=val.trim();
   if(error) showToast('Erro: '+error.message); else loadCardapio(); };
 window.setCat = async (id,val)=>{ const { error } = await sb.from('itens_cardapio').update({categoria:val.trim()||'Outros'}).eq('id',id);
   if(error) showToast('Erro: '+error.message); else loadCardapio(); };
-window.setIngredientes = async (id,val)=>{ const { error } = await sb.from('itens_cardapio').update({ingredientes:val.trim()}).eq('id',id);
-  if(error) showToast('Erro: '+error.message); else { showToast('Ingredientes atualizados'); loadCardapio(); } };
 window.setEstoque = async (id,val)=>{
   val=String(val).trim();
   const estoque = val==='' ? null : parseInt(val,10);
@@ -684,38 +530,15 @@ window.setPreco = async (id,val)=>{ const n=parseBR(val);
   if(isNaN(n)||n<0){ showToast('Valor inválido — não alterado'); loadCardapio(); return; }
   const { error } = await sb.from('itens_cardapio').update({preco:n}).eq('id',id);
   if(error) showToast('Erro: '+error.message); else { showToast('Preço atualizado'); loadCardapio(); } };
-window.removeMenuItem = async (id)=>{
-  const it=cardapio.find(x=>x.id===id);
-  if(!it) return;
-  if(!confirm(`Remover "${it.nome}" do cardápio? O histórico dos pedidos será preservado.`)) return;
-
-  const { error } = await sb.from('itens_cardapio')
-    .update({ arquivado:true, disponivel:false })
-    .eq('id',id);
-
-  if(error){
-    showToast('Não foi possível remover: '+error.message);
-    return;
-  }
-
-  // Remove imediatamente da interface; o registro continua no banco, arquivado.
-  delete carrinho.mesa[id];
-  delete carrinho.garcom[id];
-  cardapio = cardapio.filter(x=>x.id!==id);
-  renderAll();
-  showToast(`${it.nome} removido`);
-};
+window.removeMenuItem = async (id)=>{ const it=cardapio.find(x=>x.id===id);
+  if(!confirm(`Remover "${it.nome}" do cardápio?`)) return;
+  const { error } = await sb.from('itens_cardapio').delete().eq('id',id);
+  if(error) showToast('Não foi possível remover (talvez haja pedidos com este item). Marque como esgotado.');
+  else { showToast(`${it.nome} removido`); loadCardapio(); } };
 window.addMenuItem = async ()=>{ const nm=$('#new-nome').value.trim(), cat=$('#new-cat').value.trim()||'Outros', pr=parseBR($('#new-preco').value);
   if(!nm){ showToast('Informe o nome do item'); return; }
   if(isNaN(pr)||pr<0){ showToast('Informe um preço válido'); return; }
-  const { error } = await sb.from('itens_cardapio').insert({
-    nome:nm,
-    categoria:cat,
-    preco:pr,
-    emoji:'🍽️',
-    disponivel:true,
-    arquivado:false
-  });
+  const { error } = await sb.from('itens_cardapio').insert({nome:nm,categoria:cat,preco:pr,emoji:'🍽️',disponivel:true});
   if(error){ showToast('Erro: '+error.message); return; }
   $('#new-nome').value=''; $('#new-cat').value=''; $('#new-preco').value='';
   showToast(`${nm} adicionado`); loadCardapio(); };
@@ -723,22 +546,15 @@ window.addMenuItem = async ()=>{ const nm=$('#new-nome').value.trim(), cat=$('#n
 // ===== Render: Garçom (lista) =====
 function renderMenu(target, ctx){
   if(!target) return;
-  // Garçom visualiza apenas itens disponíveis e não arquivados.
-  const visiveis=cardapio.filter(i=>i.disp);
-  const cats=[...new Set(visiveis.map(i=>i.cat))];
-
-  if(!visiveis.length){
-    target.innerHTML='<div class="empty">Nenhum item disponível no momento.</div>';
-    return;
-  }
-
+  const cats=[...new Set(cardapio.map(i=>i.cat))];
   target.innerHTML = cats.map(c=>`
     <div class="cat"><h3>${c}</h3>
-      ${visiveis.filter(i=>i.cat===c).map(i=>`
-        <div class="item">
+      ${cardapio.filter(i=>i.cat===c).map(i=>`
+        <div class="item ${i.disp?'':'esgotado'}">
           <div><div class="nm">${i.nome}</div><div class="pr">${money(i.preco)}</div></div>
           <div class="right">
-            <button class="add" onclick="addItem('${ctx}',${i.id})">+</button>
+            ${i.disp ? `<button class="add" onclick="addItem('${ctx}',${i.id})">+</button>`
+                     : `<span class="tag-esg">esgotado</span>`}
           </div>
         </div>`).join('')}
     </div>`).join('');
@@ -750,10 +566,7 @@ function renderOrder(target, ctx){
     <button class="send" disabled>Enviar para cozinha</button>`; return; }
   let total=0;
   const rows=ids.map(id=>{ const it=cardapio.find(x=>x.id==id); if(!it) return ''; total+=it.preco*car[id];
-    const ob=obsCarrinho[ctx][id]||'';
-    return `<div class="ord-line"><span><span class="q">${car[id]}×</span> ${it.nome}
-        ${ob?`<span class="obs-text">${esc(ob)}</span>`:''}
-        <button class="obs-link" style="display:block;margin-top:3px" onclick="pedirObs('${ctx}',${id})">${ob?'editar obs':'+ obs (ex.: sem cebola)'}</button></span>
+    return `<div class="ord-line"><span><span class="q">${car[id]}×</span> ${it.nome}</span>
       <span>${money(it.preco*car[id])} <button onclick="delItem('${ctx}',${id})">remover</button></span></div>`; }).join('');
   target.innerHTML = rows + `<div class="total"><span>Total</span><span>${money(total)}</span></div>
     <button class="send" onclick="enviar('${ctx}')">Enviar para cozinha</button>`;
@@ -767,25 +580,17 @@ function renderKDS(){
   $('#kpi-novo').textContent = state.pedidos.filter(p=>p.status==='novo').length;
   $('#kpi-prep').textContent = state.pedidos.filter(p=>p.status==='preparo').length;
   box.innerHTML = ativos.map(p=>{
-    const elapsed=Date.now()-p.t;
-    const mins=Math.floor(elapsed/60000), secs=Math.floor(elapsed/1000)%60;
-    const SLA=10;                       // meta de preparo em minutos
-    const late=mins>=SLA;
-    const atraso=mins-SLA;
-    const hora=new Date(p.t).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    const mins=Math.floor((Date.now()-p.t)/60000), secs=Math.floor((Date.now()-p.t)/1000)%60;
+    const late=mins>=10;
     const btn = p.status==='novo'?`<button class="b-prep" onclick="avanca(${p.id})">Iniciar preparo</button>`
               : p.status==='preparo'?`<button class="b-pronto" onclick="avanca(${p.id})">Marcar pronto</button>`
               : `<button class="b-done" onclick="avanca(${p.id})">Entregue</button>`;
     const sc = p.status==='novo'?'s-novo':p.status==='preparo'?'s-preparo':'s-pronto';
     return `<div class="ticket ${p.status}">
       <div class="th"><span class="mesa">Mesa ${p.mesa}</span>
-        <span class="when">
-          <span class="clock">🕒 ${hora}</span>
-          <span class="timer ${late?'late':''}">${mins}:${String(secs).padStart(2,'0')}</span>
-          ${late?`<span class="atraso">⚠ +${atraso} min atraso</span>`:''}
-        </span></div>
-      <ul>${p.itens.map(i=>`<li><span class="q">${i.q}×</span> ${i.nome}</li>${i.obs?`<li class="obs">↳ ${esc(i.obs)}</li>`:''}`).join('')}
-        <li class="obs" style="color:var(--mut)">via ${p.origem}</li></ul>
+        <span class="timer ${late?'late':''}">${mins}:${String(secs).padStart(2,'0')}</span></div>
+      <ul>${p.itens.map(i=>`<li><span class="q">${i.q}×</span> ${i.nome}</li>`).join('')}
+        <li class="obs">via ${p.origem}</li></ul>
       <div class="kfoot"><span class="stat ${sc}">${p.status}</span></div>
       <div class="kfoot">${btn}</div>
     </div>`;
@@ -802,8 +607,6 @@ function renderMng(){
       <td><span class="preco-cell"><span class="pfx">R$</span>
         <input class="editbox preco-inp" value="${i.preco.toFixed(2).replace('.',',')}"
           inputmode="decimal" onchange="setPreco(${i.id}, this.value)" onfocus="this.select()"></span></td>
-      <td><input class="editbox" style="width:200px" value="${esc(i.ingredientes)}" placeholder="ex.: pão, carne, queijo, alface"
-          onchange="setIngredientes(${i.id}, this.value)" onfocus="this.select()"></td>
       <td><input class="editbox" style="width:64px" value="${i.estoque==null?'':i.estoque}" placeholder="∞"
           inputmode="numeric" title="vazio = ilimitado" onchange="setEstoque(${i.id}, this.value)" onfocus="this.select()"></td>
       <td><label class="switch"><input type="checkbox" ${i.disp?'checked':''} onchange="toggleDisp(${i.id})"><span class="slider"></span></label>
@@ -817,65 +620,19 @@ window.irPara=(tab)=>{ activeTab=tab;
   renderClienteGrid(); };
 function renderClienteGrid(){
   const grid=$('#cli-grid'), carousel=$('#cli-carousel'), aside=document.querySelector('#v-mesa .comanda');
-  const ingr=$('#cli-ingredientes'), hist=$('#cli-historico');
   if(!grid) return;
-  // esconde tudo; cada aba liga o que precisa
-  carousel.style.display='none'; grid.style.display='none';
-  if(ingr) ingr.style.display='none'; if(hist) hist.style.display='none';
-  // comanda só aparece nas abas de pedido
-  const mostrarComanda = (activeTab==='cardapio'||activeTab==='bebidas');
-  if(aside) aside.style.display = mostrarComanda ? '' : 'none';
-
-  if(activeTab==='promocoes'){ carousel.style.display=''; return; }
-  if(activeTab==='ingredientes'){ if(ingr) ingr.style.display=''; renderIngredientes(); return; }
-  if(activeTab==='historico'){ if(hist) hist.style.display=''; renderHistorico(); return; }
-
-  grid.style.display='';
-  // A mesa visualiza somente itens disponíveis e não arquivados.
-  const disponiveis = cardapio.filter(i=>i.disp);
-  const items = activeTab==='bebidas'
-    ? disponiveis.filter(i=>i.cat==='Bebidas')
-    : disponiveis.filter(i=>i.cat!=='Bebidas');
-
-  if(!items.length){
-    grid.innerHTML='<div class="empty">Nenhum item disponível nesta categoria.</div>';
-    return;
-  }
-
+  if(activeTab==='promocoes'){ carousel.style.display=''; grid.style.display='none'; if(aside) aside.style.display='none'; return; }
+  carousel.style.display='none'; grid.style.display=''; if(aside) aside.style.display='';
+  const items = activeTab==='bebidas' ? cardapio.filter(i=>i.cat==='Bebidas') : cardapio.filter(i=>i.cat!=='Bebidas');
   grid.innerHTML = items.map(i=>{
     const q=carrinho.mesa[i.id]||0;
-    return `<button class="prod-card" onclick="addItem('mesa',${i.id})">
+    return `<button class="prod-card ${i.disp?'':'esg'}" ${i.disp?`onclick="addItem('mesa',${i.id})"`:'disabled'}>
       <div class="prod-photo"><span class="prod-emoji">${i.emoji||'🍽️'}</span>
-        ${i.estoque!=null ? `<span class="prod-stock">resta ${i.estoque}</span>`:''}
+        ${i.disp?'':'<span class="esg-tag">esgotado</span>'}
+        ${i.disp && i.estoque!=null ? `<span class="prod-stock">resta ${i.estoque}</span>`:''}
         ${q?`<span class="prod-q">${q}</span>`:''}</div>
       <div class="prod-label"><span class="prod-nm">${i.nome}</span><span class="prod-pr">${money(i.preco)}</span></div>
     </button>`;
-  }).join('');
-}
-// Aba: ingredientes de cada item do cardápio
-function renderIngredientes(){
-  const box=$('#cli-ingredientes'); if(!box) return;
-  const itens=cardapio.filter(i=>i.disp);
-  if(!itens.length){ box.innerHTML='<div class="empty">Nenhum item disponível.</div>'; return; }
-  box.innerHTML = itens.map(i=>`
-    <div class="ingr-card">
-      <div class="in">${i.emoji||'🍽️'} ${i.nome}</div>
-      <div class="il">${i.ingredientes ? esc(i.ingredientes) : 'Ingredientes não informados.'}</div>
-    </div>`).join('');
-}
-// Aba: pedidos já enviados pela mesa (com status)
-function renderHistorico(){
-  const box=$('#cli-historico'); if(!box) return;
-  const peds=state.pedidosMesa||[];
-  if(!peds.length){ box.innerHTML='<div class="empty">Você ainda não enviou nenhum pedido hoje.</div>'; return; }
-  const rotulo={novo:'recebido',preparo:'em preparo',pronto:'pronto',entregue:'entregue'};
-  box.innerHTML = peds.map(p=>{
-    const hora=new Date(p.t).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    return `<div class="hist-card">
-      <div class="hh"><span class="ht">🕒 ${hora}</span>
-        <span class="pill p-${p.status}">${rotulo[p.status]||p.status}</span></div>
-      <ul>${p.itens.map(i=>`<li><span class="q">${i.q}×</span> ${i.nome}</li>${i.obs?`<li class="hobs">↳ ${esc(i.obs)}</li>`:''}`).join('')}</ul>
-    </div>`;
   }).join('');
 }
 function renderComanda(){
@@ -883,21 +640,17 @@ function renderComanda(){
   const car=carrinho.mesa, ids=Object.keys(car);
   if(!ids.length){ ol.innerHTML=`<li class="empty-li">Toque nos produtos para adicionar ao pedido.</li>`; }
   else{ let n=0; ol.innerHTML=ids.map(id=>{ n++; const it=cardapio.find(x=>x.id==id); if(!it) return '';
-    const ob=obsCarrinho.mesa[id]||'';
     return `<li><span class="li-num">${String(n).padStart(2,'0')}</span>
-      <span class="li-nm"><b>${car[id]}×</b> ${it.nome}
-        <button class="obs-link" style="display:block;margin-top:3px" onclick="pedirObs('mesa',${id})">${ob?'editar obs':'+ obs'}</button></span>
+      <span class="li-nm"><b>${car[id]}×</b> ${it.nome}</span>
       <span class="li-pr">${money(it.preco*car[id])}</span>
-      <button class="li-del" onclick="delItem('mesa',${id})" title="remover">−</button></li>
-      ${ob?`<li class="obs-text">↳ ${esc(ob)}</li>`:''}`; }).join(''); }
+      <button class="li-del" onclick="delItem('mesa',${id})" title="remover">−</button></li>`; }).join(''); }
   let total=0,qtd=0; ids.forEach(id=>{ const it=cardapio.find(x=>x.id==id); if(it){ total+=it.preco*car[id]; qtd+=car[id]; } });
-  $('#cli-qtd').textContent=qtd; $('#cli-total').textContent=money(total); $('#cli-send').disabled=(qtd===0)||!mesaAberta;
+  $('#cli-qtd').textContent=qtd; $('#cli-total').textContent=money(total); $('#cli-send').disabled=qtd===0;
 }
 
 function renderAll(){
   renderMenu($('#menu-garcom'),'garcom');
   renderOrder($('#ord-garcom'),'garcom');
-  renderMesasControl();
   renderClienteGrid();
   renderComanda();
   renderKDS();
